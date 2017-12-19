@@ -1,10 +1,11 @@
 require 'bundler/setup'
 require 'capybara/poltergeist'
 
-class MyJobJob < ApplicationJob
+class AtHomeScrapeJob < ApplicationJob
   queue_as :default
 
-  def at_home_scrape(url_input)
+  def perform(url_input)
+    # Do something later
 
     #  state_name = url_input[0] # set state name
       url = url_input[1]        # set url for each initial page
@@ -186,7 +187,6 @@ class MyJobJob < ApplicationJob
           return if next_link_flg != 1
           sleep(2)
       end
-
   end
 
   def zen_to_val(str, rent)
@@ -209,6 +209,5 @@ class MyJobJob < ApplicationJob
       return "-"
     end
   end
-
 
 end

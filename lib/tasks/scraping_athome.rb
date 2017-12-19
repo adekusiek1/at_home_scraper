@@ -26,5 +26,5 @@ town_urls = [
 
 # main
 town_urls.each do |town_url|
-  MyJobJob.at_home_scrape(town_url)
+  AtHomeScrapeJob.perform_later(town_url)
 end
