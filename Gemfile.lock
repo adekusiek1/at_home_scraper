@@ -61,6 +61,7 @@ GEM
     erubi (1.7.0)
     execjs (2.7.0)
     ffi (1.9.18)
+    get_process_mem (0.2.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     http-cookie (1.0.3)
@@ -112,6 +113,9 @@ GEM
       websocket-driver (>= 0.2.0)
     public_suffix (3.0.1)
     puma (3.11.0)
+    puma_worker_killer (0.1.0)
+      get_process_mem (~> 0.2)
+      puma (>= 2.7, < 4)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
@@ -234,6 +238,7 @@ DEPENDENCIES
   mysql2 (>= 0.3.18, < 0.5)
   poltergeist
   puma (~> 3.7)
+  puma_worker_killer
   rails (~> 5.1.4)
   rails_12factor
   resque

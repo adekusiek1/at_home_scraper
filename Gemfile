@@ -61,6 +61,8 @@ group :production do
   gem 'rails_12factor'
   # AWS S3 setting
   #gem 'aws-sdk'
+  gem "puma_worker_killer"
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
