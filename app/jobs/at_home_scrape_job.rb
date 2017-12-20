@@ -68,6 +68,7 @@ class AtHomeScrapeJob < ApplicationJob
           contents.each do |content|
             detail_contents = content.search(".p-property__room--detailbox")
             detail_contents.each do |detail_content|
+              GC.start
               detail_url_raw = detail_content.at(".p-property__room--detail-information").at('a')[:href]
               detail_url = "https://www.athome.co.jp" + detail_url_raw.split("?")[0]
               # puts detail_url
