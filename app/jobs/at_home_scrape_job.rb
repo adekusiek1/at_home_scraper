@@ -30,7 +30,6 @@ class AtHomeScrapeJob < ApplicationJob
       end
 
       dbg = 0
-
       # get data
       while next_link_flg >= 0
           #try open until no error
@@ -40,18 +39,19 @@ class AtHomeScrapeJob < ApplicationJob
           while res == nil and fail_count <= 4
               begin
                   if next_link_flg == 0
-                    puts "new page"
                     session.visit(url)
                     session.find("#build_display").click
                     # wait 2 second so that the page layout changes for class=p-property__room--detailbox
                     # if not found any object above try again
                     sleep(5)
                   else
+                    dbg += 1
+                    puts dbg
                     # puts "session click"
                     session.click_link('>')
                     session.click_link('>')
                     sleep(5)
-                    dbg += 1
+                    GC.start
                   end
                   page = Nokogiri::HTML.parse(session.html)
                   res = page.search(".p-property__room--detailbox")
@@ -127,15 +127,14 @@ class AtHomeScrapeJob < ApplicationJob
                     quote_company_id: 2
                 )
                 link.url = detail_url
-                puts dbg, detail_url
                 link.save!
+                GC.start
               else
               #Quote company id = 2 (at home)
                 appartment = Appartment.create(name: name, address: address, age: age, story: story, floor: floor, \
                   rent: rent, admin_fee: admin_fee, \
                   floor_plan: floor_plan, surface: surface)
                 link = appartment.links.create(url: detail_url, quote_company_id: 2)
-                puts dbg, detail_url
                 # go to each page
                 sub_agent = Mechanize.new
                 sub_agent.user_agent_alias = 'Windows Mozilla'
@@ -171,7 +170,7 @@ class AtHomeScrapeJob < ApplicationJob
                                   initial_cost: initial_cost)
                 sleep(1)
 
-
+                GC.start
               end
             end
           end
